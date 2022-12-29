@@ -22,4 +22,8 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.PropertiesUseLeadingZeroTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
 </settings>
