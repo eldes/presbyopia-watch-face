@@ -3,17 +3,47 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
+import Toybox.Time.Gregorian;
 
 class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   // fonts:
-  private var _largeBoldFont;
-  private var _largeLightFont;
-  private var _mediumFont;
+  private var _largeBoldFont as FontType;
+  private var _largeLightFont as FontType;
+  private var _mediumFont as FontType;
+
+  private var _LARGE_FONT_TOP_HEIGHT = 24;
+  private var _LARGE_FONT_BODY_HEIGHT = 68;
+  private var _MEDIUM_FONT_TOP_HEIGHT = 12;
+  private var _MEDIUM_FONT_BODY_HEIGHT = 33;
+
+  // properties:
+  private var _backgroundColor as Number = 0x000000;
+  private var _regularForegroundColor as Number = 0xcccccc;
+  private var _accentForegroundColor as Number = 0xffffff;
+
+  private var _useLeadingZero as Boolean = true;
+
+  // pseudo-properties:
+  private var _hoursFont as FontType;
+  private var _minutesFont as FontType;
+  private var _hoursColor as Number;
+  private var _minutesColor as Number;
+  private var _monthDayFont as FontType;
+  private var _weekDayFont as FontType;
+  private var _monthDayColor as Number;
+  private var _weekDayColor as Number;
+  private var _batteryFont as FontType;
+  private var _batteryTextColor as Number;
+  private var _batteryIconColor as Number;
 
   // drawables:
-  private var _background;
-  private var _time;
+  private var _timeX = 0;
+  private var _timeY = 0;
+  private var _timeWidth = 0;
+  private var _timeHeight = 0;
+
+  private const _ROW_GAP = 16;
 
   // data:
   private var _lastMinute = 0;
@@ -25,26 +55,161 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _largeBoldFont = WatchUi.loadResource(Rez.Fonts.LargeBold);
     _largeLightFont = WatchUi.loadResource(Rez.Fonts.LargeLight);
     _mediumFont = WatchUi.loadResource(Rez.Fonts.Medium);
+
+    // load properties:
+    _backgroundColor = getApp().getProperty("BackgroundColor") as Number;
+    _useLeadingZero = getApp().getProperty("UseLeadingZero") as Boolean;
+
+    // calculate pseudo-properties:
+    _hoursFont = _largeLightFont;
+    _minutesFont = _largeBoldFont;
+    _hoursColor = _regularForegroundColor;
+    _minutesColor = _accentForegroundColor;
+    _monthDayFont = _mediumFont;
+    _weekDayFont = _mediumFont;
+    _monthDayColor = _accentForegroundColor;
+    _weekDayColor = _regularForegroundColor;
+    _batteryFont = _mediumFont;
+    _batteryTextColor = _accentForegroundColor;
+    _batteryIconColor = _regularForegroundColor;
+
+    // system settings:
+
   }
 
   function onLayout(dc as Dc) as Void {
-    _background = new Background();
-    _time = new TimeDrawable(
-      _largeLightFont,
-      _largeBoldFont,
-      Graphics.COLOR_LT_GRAY,
-      Graphics.COLOR_WHITE
-    );
   }
 
   function onUpdate(dc as Dc) as Void {
 
     var clockTime = System.getClockTime();
-    _time.setClockTime(clockTime);
 
     if (clockTime.min != _lastMinute) {
-      _background.draw(dc);
-      _time.draw(dc);
+      var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
+      var dateInfo = Gregorian.utcInfo(now, Time.FORMAT_SHORT);
+
+      _drawBackground(dc);
+      _drawTime(dc, clockTime);
+      _drawDate(dc, dateInfo);
+      _drawBattery(dc);
     }
+
+    _lastMinute = clockTime.min;
+  }
+
+  private function _drawBackground(dc as Dc) as Void {
+    dc.setColor(Graphics.COLOR_TRANSPARENT, _backgroundColor);
+    dc.clear();
+  }
+
+  private function _drawTime(dc as Dc, clockTime as ClockTime) as Void {
+    var hoursString = _makeHoursString(clockTime);
+    var minutesString = _makeMinutesString(clockTime);
+
+    var hoursWidth = dc.getTextDimensions(hoursString, _hoursFont)[0];
+    var minutesWidth = dc.getTextDimensions(minutesString, _minutesFont)[0];
+
+    var hoursX = (dc.getWidth() - hoursWidth - minutesWidth) / 2;
+    var hoursY = (dc.getHeight() - _LARGE_FONT_BODY_HEIGHT) / 2 - _LARGE_FONT_TOP_HEIGHT;
+
+    var minutesX = hoursX + hoursWidth;
+    var minutesY = hoursY;
+
+    dc.setColor(_hoursColor, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(hoursX, hoursY, _hoursFont, hoursString, Graphics.TEXT_JUSTIFY_LEFT);
+
+    dc.setColor(_minutesColor, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(minutesX, minutesY, _minutesFont, minutesString, Graphics.TEXT_JUSTIFY_LEFT);
+
+    _timeX = (dc.getWidth() - hoursWidth - minutesWidth) / 2;
+    _timeY = (dc.getHeight() - _LARGE_FONT_BODY_HEIGHT) / 2;
+    _timeWidth = hoursWidth + minutesWidth;
+    _timeHeight = _LARGE_FONT_BODY_HEIGHT;
+  }
+
+  private function _drawDate(dc as Dc, dateInfo as Gregorian.Info) as Void {
+    var monthDayString = _makeMonthDayString(dateInfo);
+    var weekDayString = _makeWeekDayString(dateInfo);
+
+    var monthDayWidth = dc.getTextDimensions(monthDayString, _monthDayFont)[0];
+    var weekDayWidth = dc.getTextDimensions(weekDayString, _weekDayFont)[0];
+
+    var monthDayX = (dc.getWidth() - monthDayWidth - weekDayWidth) / 2;
+    var monthDayY = _timeY + _timeHeight + _ROW_GAP - _MEDIUM_FONT_TOP_HEIGHT;
+    var weekDayX = monthDayX + monthDayWidth;
+    var weekDayY = monthDayY;
+    
+    dc.setColor(_monthDayColor, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(monthDayX, monthDayY, _monthDayFont, monthDayString, Graphics.TEXT_JUSTIFY_LEFT);
+
+    dc.setColor(_weekDayColor, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(weekDayX, weekDayY, _weekDayFont, weekDayString, Graphics.TEXT_JUSTIFY_LEFT);
+  }
+
+  function _drawBattery(dc as Dc) as Void {
+    var stats = System.getSystemStats();
+    var percentage = Math.round(stats.battery);
+    var percentageString = percentage.format("%d");
+
+    var batteryTextDimensions = dc.getTextDimensions(percentageString, _batteryFont);
+    var batteryTextWidth = batteryTextDimensions[0];
+    var batteryTextHeight = batteryTextDimensions[1];
+
+    var batteryIconHeight = batteryTextHeight / 3;
+    var batteryIconWidth = batteryIconHeight * 2.5;
+    var batteryIconRadius = batteryIconHeight / 5;
+
+    var gap = 4;
+
+    var batteryTextX = (dc.getWidth() - batteryTextWidth - batteryIconWidth) / 2;
+    var batteryTextY = _timeY - _MEDIUM_FONT_TOP_HEIGHT - _MEDIUM_FONT_BODY_HEIGHT - _ROW_GAP;
+    var batteryIconX = batteryTextX + batteryTextWidth + gap;
+    var batteryIconY = batteryTextY + (batteryTextHeight - batteryIconHeight) / 2;
+
+    dc.setColor(_batteryTextColor, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(batteryTextX, batteryTextY, _mediumFont, percentageString, Graphics.TEXT_JUSTIFY_LEFT);
+
+    dc.setColor(_batteryIconColor, Graphics.COLOR_TRANSPARENT);
+    dc.drawRoundedRectangle(batteryIconX, batteryIconY, batteryIconWidth, batteryIconHeight, batteryIconRadius);
+    dc.fillRoundedRectangle(batteryIconX, batteryIconY, batteryIconWidth * percentage / 100, batteryIconHeight, batteryIconRadius);
+  }
+
+  private function _makeHoursString(clockTime as ClockTime) as String {
+    var hours = clockTime.hour;
+    
+    if (!System.getDeviceSettings().is24Hour && (clockTime.hour > 12)) {
+      hours = clockTime.hour - 12;
+    }
+
+    var hoursString = hours.format("%02d");
+    if (!_useLeadingZero) {
+      hoursString = hours.format("%d");
+    }
+
+    return hoursString;
+  }
+
+  private function _makeMinutesString(clockTime as ClockTime) as String {
+    return clockTime.min.format("%02d");
+  }
+
+  private function _makeMonthDayString(dateInfo as Gregorian.Info) as String {
+    return dateInfo.day.format(_useLeadingZero ? "%02d" : "%d");
+  }
+
+  private function _makeWeekDayString(dateInfo as Gregorian.Info) as String {
+    var weekDayStrings = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+    switch (System.getDeviceSettings().systemLanguage) {
+      case System.LANGUAGE_SPA:
+        weekDayStrings = ["DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB"];
+        break;
+
+      case System.LANGUAGE_POR:
+        weekDayStrings = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+        break;
+    }
+    
+    return weekDayStrings[dateInfo.day_of_week - 1];
   }
 }
