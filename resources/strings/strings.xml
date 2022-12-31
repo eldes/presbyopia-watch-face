@@ -1,11 +1,14 @@
 <strings>
 
     <string id="AppName">Presbyopia Watch Face</string>
+    <string id="AppVersionTitle">App version</string>
 
-    <string id="BackgroundColorTitle">Background Color</string>
     <string id="PropertiesUseLeadingZeroTitle">Use leading zero</string>
 
-    <string id="ColorBlack">Black</string>
-    <string id="ColorDarkGray">Dark Gray</string>
+    <string id="ColorSchemeTitle">Color Scheme</string>
+    <string id="ColorSchemeWhiteOnBlack">Dark mode: White text on Black background</string>
+    <string id="ColorSchemeYellowOnBlack">Dark mode: Yellow text on Black background</string>
+    <string id="ColorSchemeBlackOnWhite">Light mode: Black text on White background</string>
+    <string id="ColorSchemeBlackOnYellow">Light mode: Black text on Yellow background</string>
 
 </strings>

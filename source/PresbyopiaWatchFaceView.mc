@@ -8,9 +8,9 @@ import Toybox.Time.Gregorian;
 class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   // fonts:
-  private var _largeBoldFont as FontType;
-  private var _largeLightFont as FontType;
-  private var _mediumFont as FontType;
+  private var _largeBoldFont as FontType = Graphics.FONT_LARGE;
+  private var _largeLightFont as FontType = Graphics.FONT_LARGE;
+  private var _mediumFont as FontType = Graphics.FONT_LARGE;
 
   private var _LARGE_FONT_TOP_HEIGHT = 24;
   private var _LARGE_FONT_BODY_HEIGHT = 68;
@@ -18,24 +18,21 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _MEDIUM_FONT_BODY_HEIGHT = 33;
 
   // properties:
-  private var _backgroundColor as Number = 0x000000;
-  private var _regularForegroundColor as Number = 0xcccccc;
-  private var _accentForegroundColor as Number = 0xffffff;
-
+  private var _colorScheme as ColorScheme = new ColorScheme(ColorScheme.DEFAULT);
   private var _useLeadingZero as Boolean = true;
 
   // pseudo-properties:
-  private var _hoursFont as FontType;
-  private var _minutesFont as FontType;
-  private var _hoursColor as Number;
-  private var _minutesColor as Number;
-  private var _monthDayFont as FontType;
-  private var _weekDayFont as FontType;
-  private var _monthDayColor as Number;
-  private var _weekDayColor as Number;
-  private var _batteryFont as FontType;
-  private var _batteryTextColor as Number;
-  private var _batteryIconColor as Number;
+  private var _hoursFont as FontType = Graphics.FONT_LARGE;
+  private var _minutesFont as FontType = Graphics.FONT_LARGE;
+  private var _hoursColor as Number = 0xffffff;
+  private var _minutesColor as Number = 0xffffff;
+  private var _monthDayFont as FontType = Graphics.FONT_LARGE;
+  private var _weekDayFont as FontType = Graphics.FONT_LARGE;
+  private var _monthDayColor as Number = 0xffffff;
+  private var _weekDayColor as Number = 0xffffff;
+  private var _batteryFont as FontType = Graphics.FONT_LARGE;
+  private var _batteryTextColor as Number = 0xffffff;
+  private var _batteryIconColor as Number = 0xffffff;
 
   // drawables:
   private var _timeX = 0;
@@ -50,34 +47,10 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   function initialize() {
     WatchFace.initialize();
-
-    // load fonts:
-    _largeBoldFont = WatchUi.loadResource(Rez.Fonts.LargeBold);
-    _largeLightFont = WatchUi.loadResource(Rez.Fonts.LargeLight);
-    _mediumFont = WatchUi.loadResource(Rez.Fonts.Medium);
-
-    // load properties:
-    _backgroundColor = getApp().getProperty("BackgroundColor") as Number;
-    _useLeadingZero = getApp().getProperty("UseLeadingZero") as Boolean;
-
-    // calculate pseudo-properties:
-    _hoursFont = _largeLightFont;
-    _minutesFont = _largeBoldFont;
-    _hoursColor = _regularForegroundColor;
-    _minutesColor = _accentForegroundColor;
-    _monthDayFont = _mediumFont;
-    _weekDayFont = _mediumFont;
-    _monthDayColor = _accentForegroundColor;
-    _weekDayColor = _regularForegroundColor;
-    _batteryFont = _mediumFont;
-    _batteryTextColor = _accentForegroundColor;
-    _batteryIconColor = _regularForegroundColor;
-
-    // system settings:
-
   }
 
   function onLayout(dc as Dc) as Void {
+    _loadResources();
   }
 
   function onUpdate(dc as Dc) as Void {
@@ -97,8 +70,34 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _lastMinute = clockTime.min;
   }
 
+  private function _loadResources() as Void {
+    // load fonts:
+    _largeBoldFont = WatchUi.loadResource(Rez.Fonts.LargeBold);
+    _largeLightFont = WatchUi.loadResource(Rez.Fonts.LargeLight);
+    _mediumFont = WatchUi.loadResource(Rez.Fonts.Medium);
+
+    // load properties:
+    _useLeadingZero = getApp().getProperty("UseLeadingZero") as Boolean;
+    _colorScheme = new ColorScheme(getApp().getProperty("ColorScheme") as Number);
+
+    // calculate pseudo-properties:
+    _hoursFont = _largeLightFont;
+    _minutesFont = _largeBoldFont;
+    _hoursColor = _colorScheme.getSecondaryColor();
+    _minutesColor = _colorScheme.getForegroundColor();
+    _monthDayFont = _mediumFont;
+    _weekDayFont = _mediumFont;
+    _monthDayColor = _colorScheme.getForegroundColor();
+    _weekDayColor = _colorScheme.getSecondaryColor();
+    _batteryFont = _mediumFont;
+    _batteryTextColor = _colorScheme.getForegroundColor();
+    _batteryIconColor = _colorScheme.getSecondaryColor();
+
+    // system settings:
+  }
+
   private function _drawBackground(dc as Dc) as Void {
-    dc.setColor(Graphics.COLOR_TRANSPARENT, _backgroundColor);
+    dc.setColor(Graphics.COLOR_TRANSPARENT, _colorScheme.getBackgroundColor());
     dc.clear();
   }
 

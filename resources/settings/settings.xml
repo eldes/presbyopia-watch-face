@@ -1,14 +1,19 @@
 <settings>
+  <setting propertyKey="@Properties.AppVersion" title="@Strings.AppVersionTitle">
+    <settingConfig type="alphaNumeric" readonly="true" />
+  </setting>
 
-    <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
-        <settingConfig type="list">
-            <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
-            <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
-        </settingConfig>
-    </setting>
+  <setting propertyKey="@Properties.ColorScheme" title="@Strings.ColorSchemeTitle">
+    <settingConfig type="list">
+      <listEntry value="0">@Strings.ColorSchemeWhiteOnBlack</listEntry>
+      <listEntry value="10">@Strings.ColorSchemeYellowOnBlack</listEntry>
+      <listEntry value="100">@Strings.ColorSchemeBlackOnWhite</listEntry>
+      <listEntry value="110">@Strings.ColorSchemeBlackOnYellow</listEntry>
+    </settingConfig>
+  </setting>
 
-    <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.PropertiesUseLeadingZeroTitle">
-        <settingConfig type="boolean" />
-    </setting>
-    
+  <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.PropertiesUseLeadingZeroTitle">
+    <settingConfig type="boolean" />
+  </setting>
+
 </settings>
