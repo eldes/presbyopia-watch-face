@@ -197,18 +197,18 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   private function _makeWeekDayString(dateInfo as Gregorian.Info) as String {
-    var weekDayStrings = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    var weekDayStrings = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     switch (System.getDeviceSettings().systemLanguage) {
       case System.LANGUAGE_SPA:
-        weekDayStrings = ["DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB"];
+        weekDayStrings = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
         break;
 
       case System.LANGUAGE_POR:
-        weekDayStrings = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+        weekDayStrings = ["Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"];
         break;
     }
     
-    return weekDayStrings[dateInfo.day_of_week - 1];
+    return weekDayStrings[dateInfo.day_of_week - 1].substring(0, 3).toUpper();
   }
 }
