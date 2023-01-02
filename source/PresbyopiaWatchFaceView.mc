@@ -77,8 +77,8 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _mediumFont = WatchUi.loadResource(Rez.Fonts.Medium);
 
     // load properties:
-    _useLeadingZero = getApp().getProperty("UseLeadingZero") as Boolean;
-    _colorScheme = new ColorScheme(getApp().getProperty("ColorScheme") as Number);
+    _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
+    _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
 
     // calculate pseudo-properties:
     _hoursFont = _largeLightFont;
