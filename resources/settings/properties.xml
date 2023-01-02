@@ -1,7 +1,5 @@
 <properties>
-
-    <property id="BackgroundColor" type="number">0x000000</property>
-    <property id="ForegroundColor" type="number">0xFF0000</property>
-    <property id="UseMilitaryFormat" type="boolean">false</property>
-
+    <property id="AppVersion" type="string">1.0.0-rc.1</property>
+    <property id="ColorScheme" type="number">0</property>
+    <property id="UseLeadingZero" type="boolean">true</property>
 </properties>

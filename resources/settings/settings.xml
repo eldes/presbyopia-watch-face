@@ -1,25 +1,44 @@
 <settings>
+  <setting propertyKey="@Properties.AppVersion" title="@Strings.AppVersionTitle">
+    <settingConfig type="alphaNumeric" readonly="true" />
+  </setting>
 
-    <setting propertyKey="@Properties.BackgroundColor" title="@Strings.BackgroundColorTitle">
-        <settingConfig type="list">
-            <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
-            <listEntry value="0x555555">@Strings.ColorDarkGray</listEntry>
-            <listEntry value="0xAAAAAA">@Strings.ColorLightGray</listEntry>
-            <listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry>
-        </settingConfig>
-    </setting>
+  <setting propertyKey="@Properties.ColorScheme" title="@Strings.ColorSchemeTitle">
+    <settingConfig type="list">
+      <!-- DARK MODE ON BLACK -->
+      <listEntry value="0xff0">@Strings.ColorSchemeWhiteOnBlack</listEntry>
+      <listEntry value="0xee0">@Strings.ColorSchemeYellowOnBlack</listEntry>
+      <listEntry value="0xdd0">@Strings.ColorSchemeCyanOnBlack</listEntry>
+      <listEntry value="0xcc0">@Strings.ColorSchemeGreenOnBlack</listEntry>
+      <listEntry value="0xbb0">@Strings.ColorSchemeMagentaOnBlack</listEntry>
+      <listEntry value="0xaa0">@Strings.ColorSchemeOrangeOnBlack</listEntry>
+      <listEntry value="0x990">@Strings.ColorSchemeRedOnBlack</listEntry>
+      <listEntry value="0x880">@Strings.ColorSchemeBlueOnBlack</listEntry>
 
-    <setting propertyKey="@Properties.ForegroundColor" title="@Strings.ForegroundColorTitle">
-        <settingConfig type="list">
-            <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
-            <listEntry value="0x0000FF">@Strings.ColorBlue</listEntry>
-            <listEntry value="0xFF0000">@Strings.ColorRed</listEntry>
-            <listEntry value="0xFFFFFF">@Strings.ColorWhite</listEntry>
-        </settingConfig>
-    </setting>
+       <!-- DARK MODE ON RED -->
+      <listEntry value="0xff2">@Strings.ColorSchemeWhiteOnRed</listEntry>
+      <listEntry value="0xef2">@Strings.ColorSchemeWhiteAndYellowOnRed</listEntry>
 
-    <setting propertyKey="@Properties.UseMilitaryFormat" title="@Strings.MilitaryFormatTitle">
-        <settingConfig type="boolean" />
-    </setting>
+      <!-- LIGHT MODE ON WHITE -->
+      <listEntry value="0x00f">@Strings.ColorSchemeBlackOnWhite</listEntry>
+      <listEntry value="0x01f">@Strings.ColorSchemeBlueOnWhite</listEntry>
+      <listEntry value="0x02f">@Strings.ColorSchemeRedOnWhite</listEntry>
+      <listEntry value="0x03f">@Strings.ColorSchemeGreenOnWhite</listEntry>
+      <listEntry value="0x04f">@Strings.ColorSchemeVioletOnWhite</listEntry>
+
+      <!-- LIGHT MODE ON YELLOW -->
+      <listEntry value="0x00e">@Strings.ColorSchemeBlackOnYellow</listEntry>
+      <!-- LIGHT MODE ON CYAN -->
+      <listEntry value="0x00d">@Strings.ColorSchemeBlackOnCyan</listEntry>
+      <!-- LIGHT MODE ON GREEN -->
+      <listEntry value="0x00c">@Strings.ColorSchemeBlackOnGreen</listEntry>
+      <!-- LIGHT MODE ON MAGENTA -->
+      <listEntry value="0x00b">@Strings.ColorSchemeBlackOnMagenta</listEntry>
+    </settingConfig>
+  </setting>
+
+  <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.PropertiesUseLeadingZeroTitle">
+    <settingConfig type="boolean" />
+  </setting>
 
 </settings>
