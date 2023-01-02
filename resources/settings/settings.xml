@@ -5,15 +5,35 @@
 
   <setting propertyKey="@Properties.ColorScheme" title="@Strings.ColorSchemeTitle">
     <settingConfig type="list">
-      <listEntry value="0x000">@Strings.ColorSchemeWhiteOnBlack</listEntry>
-      <listEntry value="0x001">@Strings.ColorSchemeYellowOnBlack</listEntry>
-      <listEntry value="0x002">@Strings.ColorSchemeGreenOnBlack</listEntry>
-      <listEntry value="0x003">@Strings.ColorSchemeCyanOnBlack</listEntry>
-      <listEntry value="0x004">@Strings.ColorSchemeMagentaOnBlack</listEntry>
-      <listEntry value="11">@Strings.ColorSchemeYellowOnBlue</listEntry>
-      <listEntry value="100">@Strings.ColorSchemeBlackOnWhite</listEntry>
-      <listEntry value="110">@Strings.ColorSchemeBlackOnYellow</listEntry>
-      <listEntry value="111">@Strings.ColorSchemeBlueOnYellow</listEntry>
+      <!-- DARK MODE ON BLACK -->
+      <listEntry value="0xff0">@Strings.ColorSchemeWhiteOnBlack</listEntry>
+      <listEntry value="0xee0">@Strings.ColorSchemeYellowOnBlack</listEntry>
+      <listEntry value="0xdd0">@Strings.ColorSchemeCyanOnBlack</listEntry>
+      <listEntry value="0xcc0">@Strings.ColorSchemeGreenOnBlack</listEntry>
+      <listEntry value="0xbb0">@Strings.ColorSchemeMagentaOnBlack</listEntry>
+      <listEntry value="0xaa0">@Strings.ColorSchemeOrangeOnBlack</listEntry>
+      <listEntry value="0x990">@Strings.ColorSchemeRedOnBlack</listEntry>
+      <listEntry value="0x880">@Strings.ColorSchemeBlueOnBlack</listEntry>
+
+       <!-- DARK MODE ON RED -->
+      <listEntry value="0xff2">@Strings.ColorSchemeWhiteOnRed</listEntry>
+      <listEntry value="0xef2">@Strings.ColorSchemeWhiteAndYellowOnRed</listEntry>
+
+      <!-- LIGHT MODE ON WHITE -->
+      <listEntry value="0x00f">@Strings.ColorSchemeBlackOnWhite</listEntry>
+      <listEntry value="0x01f">@Strings.ColorSchemeBlueOnWhite</listEntry>
+      <listEntry value="0x02f">@Strings.ColorSchemeRedOnWhite</listEntry>
+      <listEntry value="0x03f">@Strings.ColorSchemeGreenOnWhite</listEntry>
+      <listEntry value="0x04f">@Strings.ColorSchemeVioletOnWhite</listEntry>
+
+      <!-- LIGHT MODE ON YELLOW -->
+      <listEntry value="0x00e">@Strings.ColorSchemeBlackOnYellow</listEntry>
+      <!-- LIGHT MODE ON CYAN -->
+      <listEntry value="0x00d">@Strings.ColorSchemeBlackOnCyan</listEntry>
+      <!-- LIGHT MODE ON GREEN -->
+      <listEntry value="0x00c">@Strings.ColorSchemeBlackOnGreen</listEntry>
+      <!-- LIGHT MODE ON MAGENTA -->
+      <listEntry value="0x00b">@Strings.ColorSchemeBlackOnMagenta</listEntry>
     </settingConfig>
   </setting>
 
