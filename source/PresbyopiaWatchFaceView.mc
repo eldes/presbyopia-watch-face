@@ -59,7 +59,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
     if (clockTime.min != _lastMinute) {
       var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
-      var dateInfo = Gregorian.utcInfo(now, Time.FORMAT_SHORT);
+      var dateInfo = Gregorian.info(now, Time.FORMAT_SHORT);
 
       _drawBackground(dc);
       _drawTime(dc, clockTime);
@@ -92,8 +92,6 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _batteryFont = _mediumFont;
     _batteryTextColor = _colorScheme.getForegroundColor();
     _batteryIconColor = _colorScheme.getSecondaryColor();
-
-    // system settings:
   }
 
   private function _drawBackground(dc as Dc) as Void {
