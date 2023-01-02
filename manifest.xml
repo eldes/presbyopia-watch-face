@@ -14,7 +14,11 @@
             "Monkey C: Edit Products" - Lets you add or remove any product
         -->
     <iq:products>
+      <iq:product id="d2air"/>
+      <iq:product id="d2airx10"/>
+      <iq:product id="d2mach1"/>
       <iq:product id="descentmk2s"/>
+      <iq:product id="epix2"/>
       <iq:product id="fenix5plus"/>
       <iq:product id="fenix5splus"/>
       <iq:product id="fenix5xplus"/>
@@ -28,6 +32,8 @@
       <iq:product id="fr945lte"/>
       <iq:product id="legacyherocaptainmarvel"/>
       <iq:product id="legacysagadarthvader"/>
+      <iq:product id="marq2"/>
+      <iq:product id="marq2aviator"/>
       <iq:product id="marqadventurer"/>
       <iq:product id="marqathlete"/>
       <iq:product id="marqaviator"/>
@@ -36,6 +42,10 @@
       <iq:product id="marqdriver"/>
       <iq:product id="marqexpedition"/>
       <iq:product id="marqgolfer"/>
+      <iq:product id="venu"/>
+      <iq:product id="venu2"/>
+      <iq:product id="venu2plus"/>
+      <iq:product id="venud"/>
       <iq:product id="venusq"/>
       <iq:product id="venusqm"/>
       <iq:product id="vivoactive3m"/>

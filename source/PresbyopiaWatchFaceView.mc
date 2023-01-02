@@ -7,15 +7,17 @@ import Toybox.Time.Gregorian;
 
 class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
-  // fonts:
+  // resources:
   private var _largeBoldFont as FontType = Graphics.FONT_LARGE;
   private var _largeLightFont as FontType = Graphics.FONT_LARGE;
   private var _mediumFont as FontType = Graphics.FONT_LARGE;
 
-  private var _LARGE_FONT_TOP_HEIGHT = 24;
-  private var _LARGE_FONT_BODY_HEIGHT = 68;
-  private var _MEDIUM_FONT_TOP_HEIGHT = 12;
-  private var _MEDIUM_FONT_BODY_HEIGHT = 33;
+  private var _largeFontTopHeight = 24;
+  private var _largeFontBodyHeight = 68;
+  private var _mediumFontTopHeight = 12;
+  private var _mediumFontBodyHeight = 33;
+
+  private var _row_gap = 16;
 
   // properties:
   private var _colorScheme as ColorScheme = new ColorScheme(ColorScheme.DEFAULT);
@@ -39,8 +41,6 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _timeY = 0;
   private var _timeWidth = 0;
   private var _timeHeight = 0;
-
-  private const _ROW_GAP = 16;
 
   // data:
   private var _lastMinute = 0;
@@ -75,6 +75,11 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _largeBoldFont = WatchUi.loadResource(Rez.Fonts.LargeBold);
     _largeLightFont = WatchUi.loadResource(Rez.Fonts.LargeLight);
     _mediumFont = WatchUi.loadResource(Rez.Fonts.Medium);
+    _largeFontTopHeight = WatchUi.loadResource(Rez.Strings.LargeFontTopHeight).toNumber();
+    _largeFontBodyHeight = WatchUi.loadResource(Rez.Strings.LargeFontBodyHeight).toNumber();
+    _mediumFontTopHeight = WatchUi.loadResource(Rez.Strings.MediumFontTopHeight).toNumber();
+    _mediumFontBodyHeight = WatchUi.loadResource(Rez.Strings.MediumFontBodyHeight).toNumber();
+    _row_gap = WatchUi.loadResource(Rez.Strings.RowGap).toNumber();
 
     // load properties:
     _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
@@ -107,7 +112,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var minutesWidth = dc.getTextDimensions(minutesString, _minutesFont)[0];
 
     var hoursX = (dc.getWidth() - hoursWidth - minutesWidth) / 2;
-    var hoursY = (dc.getHeight() - _LARGE_FONT_BODY_HEIGHT) / 2 - _LARGE_FONT_TOP_HEIGHT;
+    var hoursY = (dc.getHeight() - _largeFontBodyHeight) / 2 - _largeFontTopHeight;
 
     var minutesX = hoursX + hoursWidth;
     var minutesY = hoursY;
@@ -119,9 +124,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     dc.drawText(minutesX, minutesY, _minutesFont, minutesString, Graphics.TEXT_JUSTIFY_LEFT);
 
     _timeX = (dc.getWidth() - hoursWidth - minutesWidth) / 2;
-    _timeY = (dc.getHeight() - _LARGE_FONT_BODY_HEIGHT) / 2;
+    _timeY = (dc.getHeight() - _largeFontBodyHeight) / 2;
     _timeWidth = hoursWidth + minutesWidth;
-    _timeHeight = _LARGE_FONT_BODY_HEIGHT;
+    _timeHeight = _largeFontBodyHeight;
   }
 
   private function _drawDate(dc as Dc, dateInfo as Gregorian.Info) as Void {
@@ -132,7 +137,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var weekDayWidth = dc.getTextDimensions(weekDayString, _weekDayFont)[0];
 
     var monthDayX = (dc.getWidth() - monthDayWidth - weekDayWidth) / 2;
-    var monthDayY = _timeY + _timeHeight + _ROW_GAP - _MEDIUM_FONT_TOP_HEIGHT;
+    var monthDayY = _timeY + _timeHeight + _row_gap - _mediumFontTopHeight;
     var weekDayX = monthDayX + monthDayWidth;
     var weekDayY = monthDayY;
     
@@ -159,7 +164,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var gap = 4;
 
     var batteryTextX = (dc.getWidth() - batteryTextWidth - batteryIconWidth) / 2;
-    var batteryTextY = _timeY - _MEDIUM_FONT_TOP_HEIGHT - _MEDIUM_FONT_BODY_HEIGHT - _ROW_GAP;
+    var batteryTextY = _timeY - _mediumFontTopHeight - _mediumFontBodyHeight - _row_gap;
     var batteryIconX = batteryTextX + batteryTextWidth + gap;
     var batteryIconY = batteryTextY + (batteryTextHeight - batteryIconHeight) / 2;
 

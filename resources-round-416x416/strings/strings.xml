@@ -8,13 +8,13 @@
     <string id="ColorSchemeTitle">Color Scheme</string>
 
     <!-- FONT MEASURES -->
-    <string id="LargeFontTopHeight">24</string>
-    <string id="LargeFontBodyHeight">68</string>
-    <string id="MediumFontTopHeight">12</string>
-    <string id="MediumFontBodyHeight">33</string>
+    <string id="LargeFontTopHeight">39</string>
+    <string id="LargeFontBodyHeight">110.5</string>
+    <string id="MediumFontTopHeight">19.5</string>
+    <string id="MediumFontBodyHeight">54</string>
 
     <!-- LAYOUT -->
-    <string id="RowGap">16</string>
+    <string id="RowGap">26</string>
 
     <!-- DARK MODE ON BLACK -->
     <string id="ColorSchemeWhiteOnBlack">Dark mode: White text on Black background</string>
