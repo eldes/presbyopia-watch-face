@@ -7,6 +7,7 @@ class ColorScheme {
   enum Code {
     WHITE_ON_BLACK = 0,
     YELLOW_ON_BLACK = 10,
+    GREEN_ON_BLACK = 20,
     BLACK_ON_WHITE = 100,
     BLACK_ON_YELLOW = 110,
     DEFAULT = 0
@@ -21,6 +22,11 @@ class ColorScheme {
       case YELLOW_ON_BLACK:
         _foregroundColor = 0xffff00;
         _secondaryColor = 0xcccc00;
+        _backgroundColor = 0x000000;
+        break;
+      case GREEN_ON_BLACK:
+        _foregroundColor = 0x00ff00;
+        _secondaryColor = 0x00cc00;
         _backgroundColor = 0x000000;
         break;
       case BLACK_ON_WHITE:

@@ -8,6 +8,7 @@
     <string id="ColorSchemeTitle">Color Scheme</string>
     <string id="ColorSchemeWhiteOnBlack">Dark mode: White text on Black background</string>
     <string id="ColorSchemeYellowOnBlack">Dark mode: Yellow text on Black background</string>
+    <string id="ColorSchemeGreenOnBlack">Dark mode: Green text on Black background</string>
     <string id="ColorSchemeBlackOnWhite">Light mode: Black text on White background</string>
     <string id="ColorSchemeBlackOnYellow">Light mode: Black text on Yellow background</string>
 

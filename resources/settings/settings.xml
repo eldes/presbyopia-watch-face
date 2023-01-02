@@ -7,6 +7,7 @@
     <settingConfig type="list">
       <listEntry value="0">@Strings.ColorSchemeWhiteOnBlack</listEntry>
       <listEntry value="10">@Strings.ColorSchemeYellowOnBlack</listEntry>
+      <listEntry value="20">@Strings.ColorSchemeGreenOnBlack</listEntry>
       <listEntry value="100">@Strings.ColorSchemeBlackOnWhite</listEntry>
       <listEntry value="110">@Strings.ColorSchemeBlackOnYellow</listEntry>
     </settingConfig>
