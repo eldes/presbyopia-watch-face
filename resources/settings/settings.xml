@@ -11,6 +11,7 @@
       <listEntry value="20">@Strings.ColorSchemeGreenOnBlack</listEntry>
       <listEntry value="100">@Strings.ColorSchemeBlackOnWhite</listEntry>
       <listEntry value="110">@Strings.ColorSchemeBlackOnYellow</listEntry>
+      <listEntry value="111">@Strings.ColorSchemeBlueOnYellow</listEntry>
     </settingConfig>
   </setting>
 

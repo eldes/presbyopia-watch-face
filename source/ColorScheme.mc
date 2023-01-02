@@ -11,6 +11,7 @@ class ColorScheme {
     GREEN_ON_BLACK = 20,
     BLACK_ON_WHITE = 100,
     BLACK_ON_YELLOW = 110,
+    BLUE_ON_YELLOW = 111,
     DEFAULT = 0
   }
 
@@ -43,6 +44,11 @@ class ColorScheme {
       case BLACK_ON_YELLOW:
         _foregroundColor = 0x000000;
         _secondaryColor = 0x333300;
+        _backgroundColor = 0xffff00;
+        break;
+      case BLUE_ON_YELLOW:
+        _foregroundColor = 0x000099;
+        _secondaryColor = 0x3333cc;
         _backgroundColor = 0xffff00;
         break;
       case WHITE_ON_BLACK:
