@@ -6,10 +6,11 @@ class ColorScheme {
 
   enum Code {
     // light mode:
-    WHITE_ON_BLACK = 0,
-    YELLOW_ON_BLACK = 10,
-    GREEN_ON_BLACK = 20,
-    CYAN_ON_BLACK = 30,
+    WHITE_ON_BLACK = 0x000,
+    YELLOW_ON_BLACK = 0x001,
+    GREEN_ON_BLACK = 0x002,
+    CYAN_ON_BLACK = 0x003,
+    MAGENTA_ON_BLACK = 0x004,
     
     YELLOW_ON_BLUE = 11,
     YELLOW_ON_RED = 12,
@@ -49,6 +50,11 @@ class ColorScheme {
       case CYAN_ON_BLACK:
         _foregroundColor = 0x00ffff;
         _secondaryColor = 0x00cccc;
+        _backgroundColor = 0x000000;
+        break;
+      case MAGENTA_ON_BLACK:
+        _foregroundColor = 0xff00ff;
+        _secondaryColor = 0xcc00cc;
         _backgroundColor = 0x000000;
         break;
 
