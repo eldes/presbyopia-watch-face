@@ -1,0 +1,5 @@
+<fonts>
+    <font id="LargeBold" filename="large-bold.fnt" />
+    <font id="LargeLight" filename="large-light.fnt" />
+    <font id="Medium" filename="medium.fnt" />
+</fonts>

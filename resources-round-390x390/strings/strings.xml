@@ -1,0 +1,12 @@
+<strings>
+
+    <!-- FONT MEASURES -->
+    <string id="LargeFontTopHeight">39</string>
+    <string id="LargeFontBodyHeight">110.5</string>
+    <string id="MediumFontTopHeight">19.5</string>
+    <string id="MediumFontBodyHeight">54</string>
+
+    <!-- LAYOUT -->
+    <string id="RowGap">26</string>
+
+</strings>
