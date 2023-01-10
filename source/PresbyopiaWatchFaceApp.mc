@@ -3,6 +3,7 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 class PresbyopiaWatchFaceApp extends Application.AppBase {
+    hidden var _view = new PresbyopiaWatchFaceView();
 
     function initialize() {
         AppBase.initialize();
@@ -18,12 +19,12 @@ class PresbyopiaWatchFaceApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as Array<Views or InputDelegates>? {
-        return [ new PresbyopiaWatchFaceView() ] as Array<Views or InputDelegates>;
+        return [ _view ] as Array<Views or InputDelegates>;
     }
 
     // New app settings have been received so trigger a UI update
     function onSettingsChanged() as Void {
-        WatchUi.requestUpdate();
+        _view.onSettingsChanged();
     }
 
 }
