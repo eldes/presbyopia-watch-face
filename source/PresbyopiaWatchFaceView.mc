@@ -8,6 +8,7 @@ import Toybox.Time.Gregorian;
 class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   // resources:
+  private var _propertiesChanged as Boolean = false;
   private var _largeBoldFont as FontType = Graphics.FONT_LARGE;
   private var _largeLightFont as FontType = Graphics.FONT_LARGE;
   private var _mediumFont as FontType = Graphics.FONT_LARGE;
@@ -49,6 +50,12 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     WatchFace.initialize();
   }
 
+  public function onSettingsChanged() as Void {
+    _loadResources();
+    _propertiesChanged = true;
+    requestUpdate();
+  }
+
   function onLayout(dc as Dc) as Void {
     _loadResources();
   }
@@ -57,7 +64,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
     var clockTime = System.getClockTime();
 
-    if (clockTime.min != _lastMinute) {
+    if ((clockTime.min != _lastMinute) || _propertiesChanged) {
+      _propertiesChanged = false;
+
       var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
       var dateInfo = Gregorian.info(now, Time.FORMAT_SHORT);
 
