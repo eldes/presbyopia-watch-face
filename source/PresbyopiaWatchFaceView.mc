@@ -51,13 +51,14 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   public function onSettingsChanged() as Void {
-    _loadResources();
+    _loadSettings();
     _propertiesChanged = true;
     requestUpdate();
   }
 
   function onLayout(dc as Dc) as Void {
     _loadResources();
+    _loadSettings();
   }
 
   function onUpdate(dc as Dc) as Void {
@@ -65,6 +66,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var clockTime = System.getClockTime();
 
     if ((clockTime.min != _lastMinute) || _propertiesChanged) {
+      System.println("onUpdate");
       _propertiesChanged = false;
 
       var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
@@ -88,8 +90,10 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _largeFontBodyHeight = WatchUi.loadResource(Rez.Strings.LargeFontBodyHeight).toNumber();
     _mediumFontTopHeight = WatchUi.loadResource(Rez.Strings.MediumFontTopHeight).toNumber();
     _mediumFontBodyHeight = WatchUi.loadResource(Rez.Strings.MediumFontBodyHeight).toNumber();
-    _row_gap = WatchUi.loadResource(Rez.Strings.RowGap).toNumber();
+    _row_gap = WatchUi.loadResource(Rez.Strings.RowGap).toNumber(); 
+  }
 
+  private function _loadSettings() as Void {
     // load properties:
     _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
     _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
