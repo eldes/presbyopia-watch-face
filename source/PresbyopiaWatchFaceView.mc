@@ -66,7 +66,6 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var clockTime = System.getClockTime();
 
     if ((clockTime.min != _lastMinute) || _propertiesChanged) {
-      System.println("onUpdate");
       _propertiesChanged = false;
 
       var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
