@@ -8,7 +8,6 @@ import Toybox.Time.Gregorian;
 class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   // resources:
-  private var _propertiesChanged as Boolean = false;
   private var _largeBoldFont as FontType = Graphics.FONT_LARGE;
   private var _largeLightFont as FontType = Graphics.FONT_LARGE;
   private var _mediumFont as FontType = Graphics.FONT_LARGE;
@@ -43,16 +42,12 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _timeWidth = 0;
   private var _timeHeight = 0;
 
-  // data:
-  private var _lastMinute = 0;
-
   function initialize() {
     WatchFace.initialize();
   }
 
   public function onSettingsChanged() as Void {
     _loadSettings();
-    _propertiesChanged = true;
     requestUpdate();
   }
 
@@ -64,20 +59,13 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   function onUpdate(dc as Dc) as Void {
 
     var clockTime = System.getClockTime();
+    var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
+    var dateInfo = Gregorian.info(now, Time.FORMAT_SHORT);
 
-    if ((clockTime.min != _lastMinute) || _propertiesChanged) {
-      _propertiesChanged = false;
-
-      var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
-      var dateInfo = Gregorian.info(now, Time.FORMAT_SHORT);
-
-      _drawBackground(dc);
-      _drawTime(dc, clockTime);
-      _drawDate(dc, dateInfo);
-      _drawBattery(dc);
-    }
-
-    _lastMinute = clockTime.min;
+    _drawBackground(dc);
+    _drawTime(dc, clockTime);
+    _drawDate(dc, dateInfo);
+    _drawBattery(dc);
   }
 
   private function _loadResources() as Void {
