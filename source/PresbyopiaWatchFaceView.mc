@@ -42,6 +42,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _timeWidth = 0;
   private var _timeHeight = 0;
 
+  // controls:
+  private var _lowPowerMode = false;
+
   function initialize() {
     WatchFace.initialize();
   }
@@ -52,12 +55,13 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   function onLayout(dc as Dc) as Void {
+    _debug("onLayout");
     _loadResources();
     _loadSettings();
   }
 
   function onUpdate(dc as Dc) as Void {
-
+    _debug("onUpdate");
     var clockTime = System.getClockTime();
     var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
     var dateInfo = Gregorian.info(now, Time.FORMAT_SHORT);
@@ -66,6 +70,19 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     _drawTime(dc, clockTime);
     _drawDate(dc, dateInfo);
     _drawBattery(dc);
+    _drawDither(dc, clockTime);
+  }
+
+  function onEnterSleep() as Void {
+    _debug("onEnterSleep");
+    _lowPowerMode = true;
+    _calculatePseudoProperties();
+  }
+
+  function onExitSleep() as Void {
+    _debug("onExitSleep");
+    _lowPowerMode = false;
+    _calculatePseudoProperties();
   }
 
   private function _loadResources() as Void {
@@ -84,23 +101,31 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     // load properties:
     _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
     _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
+    _calculatePseudoProperties();
+    
+  }
 
-    // calculate pseudo-properties:
+  private function _calculatePseudoProperties() as Void {
+    var colorScheme = _lowPowerMode ? _colorScheme.getLowPowerMode() : _colorScheme;
     _hoursFont = _largeLightFont;
     _minutesFont = _largeBoldFont;
-    _hoursColor = _colorScheme.getSecondaryColor();
-    _minutesColor = _colorScheme.getForegroundColor();
+    _hoursColor = colorScheme.getSecondaryColor();
+    _minutesColor = colorScheme.getForegroundColor();
     _monthDayFont = _mediumFont;
     _weekDayFont = _mediumFont;
-    _monthDayColor = _colorScheme.getForegroundColor();
-    _weekDayColor = _colorScheme.getSecondaryColor();
+    _monthDayColor = colorScheme.getForegroundColor();
+    _weekDayColor = colorScheme.getSecondaryColor();
     _batteryFont = _mediumFont;
-    _batteryTextColor = _colorScheme.getForegroundColor();
-    _batteryIconColor = _colorScheme.getSecondaryColor();
+    _batteryTextColor = colorScheme.getForegroundColor();
+    _batteryIconColor = colorScheme.getSecondaryColor();
   }
 
   private function _drawBackground(dc as Dc) as Void {
-    dc.setColor(Graphics.COLOR_TRANSPARENT, _colorScheme.getBackgroundColor());
+    if (_lowPowerMode) {
+      dc.setColor(0x000000, 0x000000);  
+    } else {
+      dc.setColor(Graphics.COLOR_TRANSPARENT, _colorScheme.getBackgroundColor());
+    }
     dc.clear();
   }
 
@@ -176,6 +201,16 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     dc.fillRoundedRectangle(batteryIconX, batteryIconY, batteryIconWidth * percentage / 100, batteryIconHeight, batteryIconRadius);
   }
 
+  private function _drawDither(dc as Dc, clockTime as ClockTime) as Void {
+    if (_lowPowerMode) {
+      dc.setColor(0x000000, 0x000000);
+      for (var y = (clockTime.min % 3); y < dc.getHeight(); y += 3) {
+        dc.drawLine(0, y, dc.getWidth(), y);
+        dc.drawLine(0, y+1, dc.getWidth(), y+1);
+      }
+    }
+  }
+
   private function _makeHoursString(clockTime as ClockTime) as String {
     var hours = clockTime.hour;
     
@@ -213,5 +248,15 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     }
     
     return weekDayStrings[dateInfo.day_of_week - 1].substring(0, 3).toUpper();
+  }
+
+  (:debug)
+  private function _debug(msg as String) as Void {
+    System.println(msg);
+  }
+
+  (:release)
+  private function _debug(msg as String) as Void {
+    // do nothing
   }
 }

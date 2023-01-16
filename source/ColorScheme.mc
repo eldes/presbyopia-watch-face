@@ -36,8 +36,11 @@ class ColorScheme {
   private var _foregroundColor as Number = 0xffffff;
   private var _secondaryColor as Number = 0xcccccc;
   private var _backgroundColor as Number = 0x000000;
+  private var _code as Code;
+  private var _lowPowerModeColorScheme as ColorScheme;
 
   function initialize(code as Number) {
+    _code = code as Code;
     switch (code) {
       // dark mode on black:
       case WHITE_ON_BLACK:
@@ -151,10 +154,13 @@ class ColorScheme {
 
       case DEFAULT:
       default:
+        _code = WHITE_ON_BLACK;
         _foregroundColor = 0xffffff;
         _secondaryColor = 0xcccccc;
         _backgroundColor = 0x000000;
     }
+
+    _lowPowerModeColorScheme = _makeLowPowerModeColorScheme();
   }
 
   function getForegroundColor() as Number {
@@ -167,5 +173,52 @@ class ColorScheme {
 
   function getBackgroundColor() as Number {
     return _backgroundColor;
+  }
+
+  function getLowPowerMode() as ColorScheme {
+    return _lowPowerModeColorScheme;
+  }
+  
+  private function _makeLowPowerModeColorScheme() as ColorScheme {
+    switch (_code) {
+      
+      case YELLOW_ON_BLACK:
+      case CYAN_ON_BLACK:
+      case GREEN_ON_BLACK:
+      case MAGENTA_ON_BLACK:
+      case ORANGE_ON_BLACK:
+      case RED_ON_BLACK:
+      case BLUE_ON_BLACK:
+      case WHITE_ON_BLACK:
+        return self;
+
+      case WHITE_ON_RED:
+      case RED_ON_WHITE:
+        return new ColorScheme(RED_ON_BLACK);
+
+      case WHITE_AND_YELLOW_ON_RED:
+        return new ColorScheme(ORANGE_ON_BLACK);
+
+      case BLUE_ON_WHITE:
+        return new ColorScheme(BLUE_ON_BLACK);
+      
+      case GREEN_ON_WHITE:
+      case BLACK_ON_GREEN:
+        return new ColorScheme(GREEN_ON_BLACK);
+
+      case VIOLET_ON_WHITE:
+      case BLACK_ON_MAGENTA:
+        return new ColorScheme(MAGENTA_ON_BLACK);
+
+      case BLACK_ON_YELLOW:
+        return new ColorScheme(YELLOW_ON_BLACK);
+
+      case BLACK_ON_CYAN:
+        return new ColorScheme(CYAN_ON_BLACK);
+
+      case BLACK_ON_WHITE:
+      default:
+        return new ColorScheme(WHITE_ON_BLACK);
+    }
   }
 }
