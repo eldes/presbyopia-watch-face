@@ -17,36 +17,36 @@
     <string id="RowGap">16</string>
 
     <!-- DARK MODE ON BLACK -->
-    <string id="ColorSchemeWhiteOnBlack">Dark mode: White text on Black background</string>
-    <string id="ColorSchemeYellowOnBlack">Dark mode: Yellow text on Black background</string>
-    <string id="ColorSchemeCyanOnBlack">Dark mode: Cyan text on Black background</string>
-    <string id="ColorSchemeGreenOnBlack">Dark mode: Green text on Black background</string>
-    <string id="ColorSchemeMagentaOnBlack">Dark mode: Magenta text on Black background</string>
-    <string id="ColorSchemeOrangeOnBlack">Dark mode: Orange text on Black background</string>
-    <string id="ColorSchemeRedOnBlack">Dark mode: Red text on Black background</string>
-    <string id="ColorSchemeBlueOnBlack">Dark mode: Blue text on Black background</string>
+    <string id="ColorSchemeWhiteOnBlack">⚫️ Dark mode: ⚪️ White text on Black background</string>
+    <string id="ColorSchemeYellowOnBlack">⚫️ Dark mode: 🟡 Yellow text on Black background</string>
+    <string id="ColorSchemeCyanOnBlack">⚫️ Dark mode: 🔵 Cyan text on Black background</string>
+    <string id="ColorSchemeGreenOnBlack">⚫️ Dark mode: 🟢 Green text on Black background</string>
+    <string id="ColorSchemeMagentaOnBlack">⚫️ Dark mode: 🟣 Magenta text on Black background</string>
+    <string id="ColorSchemeOrangeOnBlack">⚫️ Dark mode: 🟠 Orange text on Black background</string>
+    <string id="ColorSchemeRedOnBlack">⚫️ Dark mode: 🔴 Red text on Black background</string>
+    <string id="ColorSchemeBlueOnBlack">⚫️ Dark mode: 🔵 Blue text on Black background</string>
 
     <!-- DARK MODE ON RED -->
-    <string id="ColorSchemeWhiteOnRed">Dark mode: White text on Red background</string>
-    <string id="ColorSchemeWhiteAndYellowOnRed">Dark mode: White and Yellow text on Red background</string>
+    <string id="ColorSchemeWhiteOnRed">🔴 Dark mode: ⚪️ White text on Red background</string>
+    <string id="ColorSchemeWhiteAndYellowOnRed">🔴 Dark mode: ⚪️🟡 White and Yellow text on Red background</string>
 
     <!-- LIGHT MODE ON WHITE -->
-    <string id="ColorSchemeBlackOnWhite">Light mode: Black text on White background</string>
-    <string id="ColorSchemeBlueOnWhite">Light mode: Blue text on White background</string>
-    <string id="ColorSchemeRedOnWhite">Light mode: Red text on White background</string>
-    <string id="ColorSchemeGreenOnWhite">Light mode: Green text on White background</string>
-    <string id="ColorSchemeVioletOnWhite">Light mode: Violet text on White background</string>
+    <string id="ColorSchemeBlackOnWhite">⚪️ Light mode: ⚫️ Black text on White background</string>
+    <string id="ColorSchemeBlueOnWhite">⚪️ Light mode: 🔵 Blue text on White background</string>
+    <string id="ColorSchemeRedOnWhite">⚪️ Light mode: 🔴 Red text on White background</string>
+    <string id="ColorSchemeGreenOnWhite">⚪️ Light mode: 🟢 Green text on White background</string>
+    <string id="ColorSchemeVioletOnWhite">⚪️ Light mode: 🟣 Violet text on White background</string>
     
     <!-- LIGHT MODE ON YELLOW -->
-    <string id="ColorSchemeBlackOnYellow">Light mode: Black text on Yellow background</string>
+    <string id="ColorSchemeBlackOnYellow">🟡 Light mode: ⚫️ Black text on Yellow background</string>
 
     <!-- LIGHT MODE ON CYAN -->
-    <string id="ColorSchemeBlackOnCyan">Light mode: Black text on Cyan background</string>
+    <string id="ColorSchemeBlackOnCyan">🔵 Light mode: ⚫️ Black text on Cyan background</string>
 
     <!-- LIGHT MODE ON GREEN -->
-    <string id="ColorSchemeBlackOnGreen">Light mode: Black text on Green background</string>
+    <string id="ColorSchemeBlackOnGreen">🟢 Light mode: ⚫️ Black text on Green background</string>
 
     <!-- LIGHT MODE ON MAGENTA -->
-    <string id="ColorSchemeBlackOnMagenta">Light mode: Black text on Magenta background</string>
+    <string id="ColorSchemeBlackOnMagenta">🟣 Light mode: ⚫️ Black text on Magenta background</string>
 
 </strings>
