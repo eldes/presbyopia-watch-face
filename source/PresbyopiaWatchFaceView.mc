@@ -63,7 +63,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   function onUpdate(dc as Dc) as Void {
     _debug("onUpdate");
     var clockTime = System.getClockTime();
-    var now = new Time.Moment(Time.now().value() + clockTime.timeZoneOffset);
+    var now = new Time.Moment(Time.now().value());
     var dateInfo = Gregorian.info(now, Time.FORMAT_SHORT);
 
     _drawBackground(dc);
