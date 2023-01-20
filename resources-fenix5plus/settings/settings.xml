@@ -1,0 +1,5 @@
+<settings>
+  <setting propertyKey="@Properties.DisplayAlwaysOn" title="@Strings.DisplayAlwaysOnTitle">
+    <settingConfig type="boolean" />
+  </setting>
+</settings>

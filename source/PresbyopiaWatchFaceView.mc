@@ -32,10 +32,11 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _row_gap = 16;
 
   // properties:
-  private var _colorScheme = new ColorScheme(ColorScheme.DEFAULT);
-  private var _useLeadingZero = true;
   private var _topField = FIELD_BATTERY;
   private var _bottomField = FIELD_DATE;
+  private var _colorScheme = new ColorScheme(ColorScheme.DEFAULT);
+  private var _useLeadingZero = true;
+  private var _displayAlwaysOn = false;
 
   // pseudo-properties:
   private var _hoursColor as Number = 0xffffff;
@@ -104,7 +105,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
         break;
     }
 
-    _drawDither(dc, clockTime);
+    if (_lowPowerMode && !_displayAlwaysOn) {
+      _drawDither(dc, clockTime);
+    }
   }
 
   function onEnterSleep() as Void {
@@ -133,10 +136,12 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   private function _loadSettings() as Void {
     // load properties:
-    _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
-    _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
     _topField = Application.Properties.getValue("TopField") as Field;
     _bottomField = Application.Properties.getValue("BottomField") as Field;
+    _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
+    _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
+    _displayAlwaysOn = (Application.Properties.getValue("DisplayAlwaysOn") as Boolean) && !System.getDeviceSettings().requiresBurnInProtection;
+    
     _calculatePseudoProperties();
     
   }
@@ -150,7 +155,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   private function _drawBackground(dc as Dc) as Void {
-    if (_lowPowerMode) {
+    if (_lowPowerMode && !_displayAlwaysOn) {
       dc.setColor(0x000000, 0x000000);  
     } else {
       dc.setColor(Graphics.COLOR_TRANSPARENT, _colorScheme.getBackgroundColor());
@@ -236,7 +241,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   private function _drawHeart(dc as Dc, position as Position) as Void {
     var lastSample = ActivityMonitor.getHeartRateHistory(1, true).next();
-    var heartRateString = lastSample ? lastSample.heartRate.toString() : "";
+    var heartRateString = (lastSample != null) ? lastSample.heartRate.toString() : "";
     _drawTextInHorizontlCenter(dc, heartRateString, _primaryColor, "", _primaryColor, position);
   }
 
@@ -256,12 +261,10 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   private function _drawDither(dc as Dc, clockTime as ClockTime) as Void {
-    if (_lowPowerMode) {
-      dc.setColor(0x000000, 0x000000);
-      for (var y = (clockTime.min % 3); y < dc.getHeight(); y += 3) {
-        dc.drawLine(0, y, dc.getWidth(), y);
-        dc.drawLine(0, y+1, dc.getWidth(), y+1);
-      }
+    dc.setColor(0x000000, 0x000000);
+    for (var y = (clockTime.min % 3); y < dc.getHeight(); y += 3) {
+      dc.drawLine(0, y, dc.getWidth(), y);
+      dc.drawLine(0, y+1, dc.getWidth(), y+1);
     }
   }
 

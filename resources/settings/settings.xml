@@ -3,6 +3,24 @@
     <settingConfig type="alphaNumeric" readonly="true" />
   </setting>
 
+  <setting propertyKey="@Properties.TopField" title="@Strings.TopFieldTitle">
+    <settingConfig type="list">
+      <listEntry value="1">@Strings.FieldBattery</listEntry>
+      <listEntry value="2">@Strings.FieldDate</listEntry>
+      <listEntry value="3">@Strings.FieldSteps</listEntry>
+      <listEntry value="4">@Strings.FieldHeart</listEntry>
+    </settingConfig>
+  </setting>
+
+  <setting propertyKey="@Properties.BottomField" title="@Strings.BottomFieldTitle">
+    <settingConfig type="list">
+      <listEntry value="1">@Strings.FieldBattery</listEntry>
+      <listEntry value="2">@Strings.FieldDate</listEntry>
+      <listEntry value="3">@Strings.FieldSteps</listEntry>
+      <listEntry value="4">@Strings.FieldHeart</listEntry>
+    </settingConfig>
+  </setting>
+
   <setting propertyKey="@Properties.ColorScheme" title="@Strings.ColorSchemeTitle">
     <settingConfig type="list">
       <!-- DARK MODE ON BLACK -->
@@ -39,23 +57,5 @@
 
   <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.UseLeadingZeroTitle">
     <settingConfig type="boolean" />
-  </setting>
-
-  <setting propertyKey="@Properties.TopField" title="@Strings.TopFieldTitle">
-    <settingConfig type="list">
-      <listEntry value="1">@Strings.FieldBattery</listEntry>
-      <listEntry value="2">@Strings.FieldDate</listEntry>
-      <listEntry value="3">@Strings.FieldSteps</listEntry>
-      <listEntry value="4">@Strings.FieldHeart</listEntry>
-    </settingConfig>
-  </setting>
-
-  <setting propertyKey="@Properties.BottomField" title="@Strings.BottomFieldTitle">
-    <settingConfig type="list">
-      <listEntry value="1">@Strings.FieldBattery</listEntry>
-      <listEntry value="2">@Strings.FieldDate</listEntry>
-      <listEntry value="3">@Strings.FieldSteps</listEntry>
-      <listEntry value="4">@Strings.FieldHeart</listEntry>
-    </settingConfig>
   </setting>
 </settings>

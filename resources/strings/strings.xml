@@ -2,10 +2,17 @@
 
     <string id="AppName">Presbyopia Watch Face</string>
     <string id="AppVersionTitle">App version</string>
-    <string id="UseLeadingZeroTitle">Use leading zero</string>
-    <string id="ColorSchemeTitle">Color Scheme</string>
     <string id="TopFieldTitle">Top field</string>
     <string id="BottomFieldTitle">Bottom field</string>
+    <string id="ColorSchemeTitle">Color scheme</string>
+    <string id="UseLeadingZeroTitle">Use leading zero</string>
+    <string id="DisplayAlwaysOnTitle">Keep the MIP display always on</string>
+
+    <!-- FIELDS -->
+    <string id="FieldBattery">🔋 Battery</string>
+    <string id="FieldDate">📅 Date</string>
+    <string id="FieldSteps">🦶🏼 Steps</string>
+    <string id="FieldHeart">♥️ Heart</string>
 
     <!-- FONT MEASURES -->
     <string id="LargeFontTopHeight">24</string>
@@ -48,11 +55,4 @@
 
     <!-- LIGHT MODE ON MAGENTA -->
     <string id="ColorSchemeBlackOnMagenta">🟣 Light mode: ⚫️ Black text on Magenta background</string>
-
-    <!-- FIELDS -->
-    <string id="FieldBattery">🔋 Battery</string>
-    <string id="FieldDate">📅 Date</string>
-    <string id="FieldSteps">🦶🏼 Steps</string>
-    <string id="FieldHeart">♥️ Heart</string>
-
 </strings>
