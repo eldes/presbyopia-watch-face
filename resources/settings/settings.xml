@@ -37,8 +37,23 @@
     </settingConfig>
   </setting>
 
-  <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.PropertiesUseLeadingZeroTitle">
+  <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.UseLeadingZeroTitle">
     <settingConfig type="boolean" />
   </setting>
 
+  <setting propertyKey="@Properties.TopField" title="@Strings.TopFieldTitle">
+    <settingConfig type="list">
+      <listEntry value="1">@Strings.FieldBattery</listEntry>
+      <listEntry value="2">@Strings.FieldDate</listEntry>
+      <listEntry value="3">@Strings.FieldSteps</listEntry>
+    </settingConfig>
+  </setting>
+
+  <setting propertyKey="@Properties.BottomField" title="@Strings.BottomFieldTitle">
+    <settingConfig type="list">
+      <listEntry value="1">@Strings.FieldBattery</listEntry>
+      <listEntry value="2">@Strings.FieldDate</listEntry>
+      <listEntry value="3">@Strings.FieldSteps</listEntry>
+    </settingConfig>
+  </setting>
 </settings>
