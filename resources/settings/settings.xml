@@ -46,6 +46,7 @@
       <listEntry value="1">@Strings.FieldBattery</listEntry>
       <listEntry value="2">@Strings.FieldDate</listEntry>
       <listEntry value="3">@Strings.FieldSteps</listEntry>
+      <listEntry value="4">@Strings.FieldHeart</listEntry>
     </settingConfig>
   </setting>
 
@@ -54,6 +55,7 @@
       <listEntry value="1">@Strings.FieldBattery</listEntry>
       <listEntry value="2">@Strings.FieldDate</listEntry>
       <listEntry value="3">@Strings.FieldSteps</listEntry>
+      <listEntry value="4">@Strings.FieldHeart</listEntry>
     </settingConfig>
   </setting>
 </settings>

@@ -15,7 +15,8 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   enum Field {
     FIELD_BATTERY = 1,
     FIELD_DATE = 2,
-    FIELD_STEPS = 3
+    FIELD_STEPS = 3,
+    FIELD_HEART = 4
   }
 
   // resources:
@@ -80,6 +81,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
       case FIELD_STEPS:
         _drawSteps(dc, POSITION_TOP);
         break;
+      case FIELD_HEART:
+        _drawHeart(dc, POSITION_TOP);
+        break;
       default:
         _drawDate(dc, dateInfo, POSITION_TOP);
         break;
@@ -91,6 +95,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
         break;
       case FIELD_STEPS:
         _drawSteps(dc, POSITION_BOTTOM);
+        break;
+      case FIELD_HEART:
+        _drawHeart(dc, POSITION_BOTTOM);
         break;
       default:
         _drawDate(dc, dateInfo, POSITION_BOTTOM);
@@ -225,6 +232,12 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
       var hundredsString = _useLeadingZero ? hundreds.format("%03d") : hundreds.toString();
       _drawTextInHorizontlCenter(dc, thousandsString, _secondaryColor, hundredsString, _primaryColor, position);
     }
+  }
+
+  private function _drawHeart(dc as Dc, position as Position) as Void {
+    var lastSample = ActivityMonitor.getHeartRateHistory(1, true).next();
+    var heartRateString = lastSample ? lastSample.heartRate.toString() : "";
+    _drawTextInHorizontlCenter(dc, heartRateString, _primaryColor, "", _primaryColor, position);
   }
 
   private function _drawTextInHorizontlCenter(dc as Dc, part1 as String, color1 as Number, part2 as String, color2 as Number, position as Position) as Void {
