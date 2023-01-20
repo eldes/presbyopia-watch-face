@@ -7,6 +7,18 @@ import Toybox.Time.Gregorian;
 
 class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
+  enum Position {
+    POSITION_TOP,
+    POSITION_BOTTOM
+  }
+
+  enum Field {
+    FIELD_BATTERY = 1,
+    FIELD_DATE = 2,
+    FIELD_STEPS = 3,
+    FIELD_HEART = 4
+  }
+
   // resources:
   private var _largeBoldFont as FontType = Graphics.FONT_LARGE;
   private var _largeLightFont as FontType = Graphics.FONT_LARGE;
@@ -20,27 +32,21 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _row_gap = 16;
 
   // properties:
-  private var _colorScheme as ColorScheme = new ColorScheme(ColorScheme.DEFAULT);
-  private var _useLeadingZero as Boolean = true;
+  private var _topField = FIELD_BATTERY;
+  private var _bottomField = FIELD_DATE;
+  private var _colorScheme = new ColorScheme(ColorScheme.DEFAULT);
+  private var _useLeadingZero = true;
+  private var _displayAlwaysOn = false;
 
   // pseudo-properties:
-  private var _hoursFont as FontType = Graphics.FONT_LARGE;
-  private var _minutesFont as FontType = Graphics.FONT_LARGE;
   private var _hoursColor as Number = 0xffffff;
   private var _minutesColor as Number = 0xffffff;
-  private var _monthDayFont as FontType = Graphics.FONT_LARGE;
-  private var _weekDayFont as FontType = Graphics.FONT_LARGE;
-  private var _monthDayColor as Number = 0xffffff;
-  private var _weekDayColor as Number = 0xffffff;
-  private var _batteryFont as FontType = Graphics.FONT_LARGE;
-  private var _batteryTextColor as Number = 0xffffff;
-  private var _batteryIconColor as Number = 0xffffff;
+  private var _primaryColor as Number = 0xffffff;
+  private var _secondaryColor as Number = 0xffffff;
 
-  // drawables:
-  private var _timeX = 0;
-  private var _timeY = 0;
-  private var _timeWidth = 0;
-  private var _timeHeight = 0;
+  // drawing:
+  private var _topFieldY = 0;
+  private var _bottomFieldY = 0;
 
   // controls:
   private var _lowPowerMode = false;
@@ -68,9 +74,40 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
     _drawBackground(dc);
     _drawTime(dc, clockTime);
-    _drawDate(dc, dateInfo);
-    _drawBattery(dc);
-    _drawDither(dc, clockTime);
+
+    switch (_topField) {
+      case FIELD_BATTERY:
+        _drawBattery(dc, POSITION_TOP);
+        break;
+      case FIELD_STEPS:
+        _drawSteps(dc, POSITION_TOP);
+        break;
+      case FIELD_HEART:
+        _drawHeart(dc, POSITION_TOP);
+        break;
+      default:
+        _drawDate(dc, dateInfo, POSITION_TOP);
+        break;
+    }
+
+    switch (_bottomField) {
+      case FIELD_BATTERY:
+        _drawBattery(dc, POSITION_BOTTOM);
+        break;
+      case FIELD_STEPS:
+        _drawSteps(dc, POSITION_BOTTOM);
+        break;
+      case FIELD_HEART:
+        _drawHeart(dc, POSITION_BOTTOM);
+        break;
+      default:
+        _drawDate(dc, dateInfo, POSITION_BOTTOM);
+        break;
+    }
+
+    if (_lowPowerMode && !_displayAlwaysOn) {
+      _drawDither(dc, clockTime);
+    }
   }
 
   function onEnterSleep() as Void {
@@ -99,29 +136,26 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
 
   private function _loadSettings() as Void {
     // load properties:
-    _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
+    _topField = Application.Properties.getValue("TopField") as Field;
+    _bottomField = Application.Properties.getValue("BottomField") as Field;
     _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
+    _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
+    _displayAlwaysOn = (Application.Properties.getValue("DisplayAlwaysOn") as Boolean) && !System.getDeviceSettings().requiresBurnInProtection;
+    
     _calculatePseudoProperties();
     
   }
 
   private function _calculatePseudoProperties() as Void {
     var colorScheme = _lowPowerMode ? _colorScheme.getLowPowerMode() : _colorScheme;
-    _hoursFont = _largeLightFont;
-    _minutesFont = _largeBoldFont;
     _hoursColor = colorScheme.getSecondaryColor();
     _minutesColor = colorScheme.getForegroundColor();
-    _monthDayFont = _mediumFont;
-    _weekDayFont = _mediumFont;
-    _monthDayColor = colorScheme.getForegroundColor();
-    _weekDayColor = colorScheme.getSecondaryColor();
-    _batteryFont = _mediumFont;
-    _batteryTextColor = colorScheme.getForegroundColor();
-    _batteryIconColor = colorScheme.getSecondaryColor();
+    _primaryColor = colorScheme.getForegroundColor();
+    _secondaryColor = colorScheme.getSecondaryColor();
   }
 
   private function _drawBackground(dc as Dc) as Void {
-    if (_lowPowerMode) {
+    if (_lowPowerMode && !_displayAlwaysOn) {
       dc.setColor(0x000000, 0x000000);  
     } else {
       dc.setColor(Graphics.COLOR_TRANSPARENT, _colorScheme.getBackgroundColor());
@@ -133,8 +167,8 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var hoursString = _makeHoursString(clockTime);
     var minutesString = _makeMinutesString(clockTime);
 
-    var hoursWidth = dc.getTextDimensions(hoursString, _hoursFont)[0];
-    var minutesWidth = dc.getTextDimensions(minutesString, _minutesFont)[0];
+    var hoursWidth = dc.getTextDimensions(hoursString, _largeLightFont)[0];
+    var minutesWidth = dc.getTextDimensions(minutesString, _largeBoldFont)[0];
 
     var hoursX = (dc.getWidth() - hoursWidth - minutesWidth) / 2;
     var hoursY = (dc.getHeight() - _largeFontBodyHeight) / 2 - _largeFontTopHeight;
@@ -143,42 +177,30 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var minutesY = hoursY;
 
     dc.setColor(_hoursColor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(hoursX, hoursY, _hoursFont, hoursString, Graphics.TEXT_JUSTIFY_LEFT);
+    dc.drawText(hoursX, hoursY, _largeLightFont, hoursString, Graphics.TEXT_JUSTIFY_LEFT);
 
     dc.setColor(_minutesColor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(minutesX, minutesY, _minutesFont, minutesString, Graphics.TEXT_JUSTIFY_LEFT);
+    dc.drawText(minutesX, minutesY, _largeBoldFont, minutesString, Graphics.TEXT_JUSTIFY_LEFT);
 
-    _timeX = (dc.getWidth() - hoursWidth - minutesWidth) / 2;
-    _timeY = (dc.getHeight() - _largeFontBodyHeight) / 2;
-    _timeWidth = hoursWidth + minutesWidth;
-    _timeHeight = _largeFontBodyHeight;
+    var timeY = (dc.getHeight() - _largeFontBodyHeight) / 2;
+    var timeHeight = _largeFontBodyHeight;
+
+    _topFieldY = timeY - _mediumFontTopHeight - _mediumFontBodyHeight - _row_gap;
+    _bottomFieldY = timeY + timeHeight + _row_gap - _mediumFontTopHeight;
   }
 
-  private function _drawDate(dc as Dc, dateInfo as Gregorian.Info) as Void {
+  private function _drawDate(dc as Dc, dateInfo as Gregorian.Info, position as Position) as Void {
     var monthDayString = _makeMonthDayString(dateInfo);
     var weekDayString = _makeWeekDayString(dateInfo);
-
-    var monthDayWidth = dc.getTextDimensions(monthDayString, _monthDayFont)[0];
-    var weekDayWidth = dc.getTextDimensions(weekDayString, _weekDayFont)[0];
-
-    var monthDayX = (dc.getWidth() - monthDayWidth - weekDayWidth) / 2;
-    var monthDayY = _timeY + _timeHeight + _row_gap - _mediumFontTopHeight;
-    var weekDayX = monthDayX + monthDayWidth;
-    var weekDayY = monthDayY;
-    
-    dc.setColor(_monthDayColor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(monthDayX, monthDayY, _monthDayFont, monthDayString, Graphics.TEXT_JUSTIFY_LEFT);
-
-    dc.setColor(_weekDayColor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(weekDayX, weekDayY, _weekDayFont, weekDayString, Graphics.TEXT_JUSTIFY_LEFT);
+    _drawTextInHorizontlCenter(dc, monthDayString, _primaryColor, weekDayString, _secondaryColor, position);
   }
 
-  function _drawBattery(dc as Dc) as Void {
+  function _drawBattery(dc as Dc, position as Position) as Void {
     var stats = System.getSystemStats();
     var percentage = Math.round(stats.battery);
     var percentageString = percentage.format("%d");
 
-    var batteryTextDimensions = dc.getTextDimensions(percentageString, _batteryFont);
+    var batteryTextDimensions = dc.getTextDimensions(percentageString, _mediumFont);
     var batteryTextWidth = batteryTextDimensions[0];
     var batteryTextHeight = batteryTextDimensions[1];
 
@@ -189,25 +211,60 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     var gap = 4;
 
     var batteryTextX = (dc.getWidth() - batteryTextWidth - batteryIconWidth) / 2;
-    var batteryTextY = _timeY - _mediumFontTopHeight - _mediumFontBodyHeight - _row_gap;
+    var batteryTextY = (position == POSITION_TOP) ? _topFieldY : _bottomFieldY;
     var batteryIconX = batteryTextX + batteryTextWidth + gap;
     var batteryIconY = batteryTextY + (batteryTextHeight - batteryIconHeight) / 2;
 
-    dc.setColor(_batteryTextColor, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(_primaryColor, Graphics.COLOR_TRANSPARENT);
     dc.drawText(batteryTextX, batteryTextY, _mediumFont, percentageString, Graphics.TEXT_JUSTIFY_LEFT);
 
-    dc.setColor(_batteryIconColor, Graphics.COLOR_TRANSPARENT);
+    dc.setColor(_secondaryColor, Graphics.COLOR_TRANSPARENT);
     dc.drawRoundedRectangle(batteryIconX, batteryIconY, batteryIconWidth, batteryIconHeight, batteryIconRadius);
     dc.fillRoundedRectangle(batteryIconX, batteryIconY, batteryIconWidth * percentage / 100, batteryIconHeight, batteryIconRadius);
   }
 
+  private function _drawSteps(dc as Dc, position as Position) as Void {
+    var steps = Toybox.ActivityMonitor.getInfo().steps;
+    var hundreds = steps % 1000;
+    var thousands = (steps - hundreds) / 1000;
+
+    if (thousands) {
+      var thousandsString = thousands.toString();
+      var hundredsString = hundreds.format("%03d");
+      _drawTextInHorizontlCenter(dc, thousandsString, _primaryColor, hundredsString, _secondaryColor, position);
+    } else {
+      var thousandsString = "";
+      var hundredsString = _useLeadingZero ? hundreds.format("%03d") : hundreds.toString();
+      _drawTextInHorizontlCenter(dc, thousandsString, _secondaryColor, hundredsString, _primaryColor, position);
+    }
+  }
+
+  private function _drawHeart(dc as Dc, position as Position) as Void {
+    var lastSample = ActivityMonitor.getHeartRateHistory(1, true).next();
+    var heartRateString = (lastSample != null) ? lastSample.heartRate.toString() : "";
+    _drawTextInHorizontlCenter(dc, heartRateString, _primaryColor, "", _primaryColor, position);
+  }
+
+  private function _drawTextInHorizontlCenter(dc as Dc, part1 as String, color1 as Number, part2 as String, color2 as Number, position as Position) as Void {
+    var part1Width = dc.getTextDimensions(part1, _mediumFont)[0];
+    var part2Width = dc.getTextDimensions(part2, _mediumFont)[0];
+
+    var part1X = (dc.getWidth() - part1Width - part2Width) / 2;
+    var part2X = part1X + part1Width;
+    var y = (position == POSITION_TOP) ? _topFieldY : _bottomFieldY;
+    
+    dc.setColor(color1, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(part1X, y, _mediumFont, part1, Graphics.TEXT_JUSTIFY_LEFT);
+
+    dc.setColor(color2, Graphics.COLOR_TRANSPARENT);
+    dc.drawText(part2X, y, _mediumFont, part2, Graphics.TEXT_JUSTIFY_LEFT);
+  }
+
   private function _drawDither(dc as Dc, clockTime as ClockTime) as Void {
-    if (_lowPowerMode) {
-      dc.setColor(0x000000, 0x000000);
-      for (var y = (clockTime.min % 3); y < dc.getHeight(); y += 3) {
-        dc.drawLine(0, y, dc.getWidth(), y);
-        dc.drawLine(0, y+1, dc.getWidth(), y+1);
-      }
+    dc.setColor(0x000000, 0x000000);
+    for (var y = (clockTime.min % 3); y < dc.getHeight(); y += 3) {
+      dc.drawLine(0, y, dc.getWidth(), y);
+      dc.drawLine(0, y+1, dc.getWidth(), y+1);
     }
   }
 
