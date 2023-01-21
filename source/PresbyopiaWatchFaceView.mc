@@ -240,9 +240,15 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   private function _drawHeart(dc as Dc, position as Position) as Void {
-    var lastSample = ActivityMonitor.getHeartRateHistory(1, true).next();
-    var heartRateString = (lastSample != null) ? lastSample.heartRate.toString() : "";
-    _drawTextInHorizontlCenter(dc, heartRateString, _primaryColor, "", _primaryColor, position);
+    var heartRate = Activity.getActivityInfo().currentHeartRate; //get the latest HR if available
+    if (heartRate == null) {
+      var history =  ActivityMonitor.getHeartRateHistory(1, true);
+      heartRate = history.next().heartRate;
+    }
+
+    if (heartRate != null && heartRate != 255 /* ActivityMonitor.INVALID_HR_SAMPLE */) {
+        _drawTextInHorizontlCenter(dc, heartRate.toString(), _primaryColor, "", _primaryColor, position);
+    }
   }
 
   private function _drawTextInHorizontlCenter(dc as Dc, part1 as String, color1 as Number, part2 as String, color2 as Number, position as Position) as Void {
