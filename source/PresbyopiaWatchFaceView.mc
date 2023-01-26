@@ -32,11 +32,16 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   private var _row_gap = 16;
 
   // properties:
-  private var _topField = FIELD_BATTERY;
-  private var _bottomField = FIELD_DATE;
+  private const PROPERTY_DEFAULT_TOP_FIELD = FIELD_BATTERY;
+  private const PROPERTY_DEFAULT_BOTTOM_FIELD = FIELD_DATE;
+  private const PROPERTY_DEFAULT_USE_LEADING_ZERO = false;
+  private const PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON = false;
+
+  private var _topField = PROPERTY_DEFAULT_TOP_FIELD;
+  private var _bottomField = PROPERTY_DEFAULT_BOTTOM_FIELD;
   private var _colorScheme = new ColorScheme(ColorScheme.DEFAULT);
-  private var _useLeadingZero = true;
-  private var _displayAlwaysOn = false;
+  private var _useLeadingZero = PROPERTY_DEFAULT_USE_LEADING_ZERO;
+  private var _displayAlwaysOn = PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON;
 
   // pseudo-properties:
   private var _hoursColor as Number = 0xffffff;
@@ -135,15 +140,18 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   private function _loadSettings() as Void {
-    // load properties:
+    // load properties: 
     _topField = Application.Properties.getValue("TopField") as Field;
     _bottomField = Application.Properties.getValue("BottomField") as Field;
     _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
     _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
-    _displayAlwaysOn = (Application.Properties.getValue("DisplayAlwaysOn") as Boolean) && !System.getDeviceSettings().requiresBurnInProtection;
+    try{
+      _displayAlwaysOn = (Application.Properties.getValue("DisplayAlwaysOn") as Boolean) && !System.getDeviceSettings().requiresBurnInProtection;
+    } catch (e) {
+      _displayAlwaysOn = PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON;
+    }
     
     _calculatePseudoProperties();
-    
   }
 
   private function _calculatePseudoProperties() as Void {
