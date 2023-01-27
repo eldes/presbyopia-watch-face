@@ -13,6 +13,14 @@ class ColorScheme {
     RED_ON_BLACK = 0x990,
     BLUE_ON_BLACK = 0x880,
 
+    YELLOW_AND_WHITE_ON_BLACK = 0xef0,
+    CYAN_AND_WHITE_ON_BLACK = 0xdf0,
+    GREEN_AND_WHITE_ON_BLACK = 0xcf0,
+    MAGENTA_AND_WHITE_ON_BLACK = 0xbf0,
+    ORANGE_AND_WHITE_ON_BLACK = 0xaf0,
+    RED_AND_WHITE_ON_BLACK = 0x9f0,
+    BLUE_AND_WHITE_ON_BLACK = 0x8f0,
+
     // dark mode on red:
     WHITE_ON_RED = 0xff2,
     WHITE_AND_YELLOW_ON_RED = 0xef2,
@@ -42,7 +50,7 @@ class ColorScheme {
   function initialize(code as Number) {
     _code = code as Code;
     switch (code) {
-      // dark mode on black:
+      // dark mode on black (1 color):
       case WHITE_ON_BLACK:
         _foregroundColor = 0xffffff;
         _secondaryColor = 0xcccccc;
@@ -69,7 +77,7 @@ class ColorScheme {
         _backgroundColor = 0x000000;
         break;
       case ORANGE_ON_BLACK:
-        _foregroundColor = 0xff9900;
+        _foregroundColor = 0xff9933;
         _secondaryColor = 0xcc6600;
         _backgroundColor = 0x000000;
         break;
@@ -79,8 +87,45 @@ class ColorScheme {
         _backgroundColor = 0x000000;
         break;
       case BLUE_ON_BLACK:
-        _foregroundColor = 0x3333ff;
+        _foregroundColor = 0x6666ff;
         _secondaryColor = 0x0000cc;
+        _backgroundColor = 0x000000;
+        break;
+
+      // dark mode on black (2 colors):
+      case YELLOW_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0xffff00;
+        _secondaryColor = 0xffffff;
+        _backgroundColor = 0x000000;
+        break;
+      case CYAN_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0x00ffff;
+        _secondaryColor = 0xffffff;
+        _backgroundColor = 0x000000;
+        break;
+      case GREEN_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0x33ff33;
+        _secondaryColor = 0xffffff;
+        _backgroundColor = 0x000000;
+        break;
+      case MAGENTA_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0xff00ff;
+        _secondaryColor = 0xffffff;
+        _backgroundColor = 0x000000;
+        break;
+      case ORANGE_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0xff9933;
+        _secondaryColor = 0xffffff;
+        _backgroundColor = 0x000000;
+        break;
+      case RED_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0xff3333;
+        _secondaryColor = 0xffffff;
+        _backgroundColor = 0x000000;
+        break;
+      case BLUE_AND_WHITE_ON_BLACK:
+        _foregroundColor = 0x6666ff;
+        _secondaryColor = 0xffffff;
         _backgroundColor = 0x000000;
         break;
 
@@ -163,6 +208,10 @@ class ColorScheme {
     _lowPowerModeColorScheme = _makeLowPowerModeColorScheme();
   }
 
+  static function makeDefault() as ColorScheme {
+    return new ColorScheme(0);
+  }
+
   function getForegroundColor() as Number {
     return _foregroundColor;
   }
@@ -177,6 +226,10 @@ class ColorScheme {
 
   function getLowPowerMode() as ColorScheme {
     return _lowPowerModeColorScheme;
+  }
+
+  function toNumber() as Number {
+    return _code as Number;
   }
   
   private function _makeLowPowerModeColorScheme() as ColorScheme {

@@ -33,6 +33,14 @@
       <listEntry value="0x990">@Strings.ColorSchemeRedOnBlack</listEntry>
       <listEntry value="0x880">@Strings.ColorSchemeBlueOnBlack</listEntry>
 
+      <listEntry value="0xef0">@Strings.ColorSchemeYellowAndWhiteOnBlack</listEntry>
+      <listEntry value="0xdf0">@Strings.ColorSchemeCyanAndWhiteOnBlack</listEntry>
+      <listEntry value="0xcf0">@Strings.ColorSchemeGreenAndWhiteOnBlack</listEntry>
+      <listEntry value="0xbf0">@Strings.ColorSchemeMagentaAndWhiteOnBlack</listEntry>
+      <listEntry value="0xaf0">@Strings.ColorSchemeOrangeAndWhiteOnBlack</listEntry>
+      <listEntry value="0x9f0">@Strings.ColorSchemeRedAndWhiteOnBlack</listEntry>
+      <listEntry value="0x8f0">@Strings.ColorSchemeBlueAndWhiteOnBlack</listEntry>
+
        <!-- DARK MODE ON RED -->
       <listEntry value="0xff2">@Strings.ColorSchemeWhiteOnRed</listEntry>
       <listEntry value="0xef2">@Strings.ColorSchemeWhiteAndYellowOnRed</listEntry>

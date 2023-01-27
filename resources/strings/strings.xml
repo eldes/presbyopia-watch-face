@@ -32,6 +32,13 @@
     <string id="ColorSchemeOrangeOnBlack">⚫️ Dark mode: 🟠 Orange text on Black background</string>
     <string id="ColorSchemeRedOnBlack">⚫️ Dark mode: 🔴 Red text on Black background</string>
     <string id="ColorSchemeBlueOnBlack">⚫️ Dark mode: 🔵 Blue text on Black background</string>
+    <string id="ColorSchemeYellowAndWhiteOnBlack">⚫️ Dark mode: 🟡⚪️ Yellow and White text on Black background</string>
+    <string id="ColorSchemeCyanAndWhiteOnBlack">⚫️ Dark mode: 🔵⚪️ Cyan and White text on Black background</string>
+    <string id="ColorSchemeGreenAndWhiteOnBlack">⚫️ Dark mode: 🟢⚪️ Green and White text on Black background</string>
+    <string id="ColorSchemeMagentaAndWhiteOnBlack">⚫️ Dark mode: 🟣⚪️ Magenta and White text on Black background</string>
+    <string id="ColorSchemeOrangeAndWhiteOnBlack">⚫️ Dark mode: 🟠⚪️ Orange and White text on Black background</string>
+    <string id="ColorSchemeRedAndWhiteOnBlack">⚫️ Dark mode: 🔴⚪️ Red and White text on Black background</string>
+    <string id="ColorSchemeBlueAndWhiteOnBlack">⚫️ Dark mode: 🔵⚪️ Blue and White text on Black background</string>
 
     <!-- DARK MODE ON RED -->
     <string id="ColorSchemeWhiteOnRed">🔴 Dark mode: ⚪️ White text on Red background</string>
