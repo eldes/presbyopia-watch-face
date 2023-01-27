@@ -347,6 +347,10 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
       case System.LANGUAGE_POR:
         weekDayStrings = ["Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"];
         break;
+      
+      case System.LANGUAGE_ITA:
+        weekDayStrings = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+        break;
     }
     
     return weekDayStrings[dateInfo.day_of_week - 1].substring(0, 3).toUpper();
