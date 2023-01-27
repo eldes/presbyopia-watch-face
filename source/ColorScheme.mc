@@ -163,6 +163,10 @@ class ColorScheme {
     _lowPowerModeColorScheme = _makeLowPowerModeColorScheme();
   }
 
+  static function makeDefault() as ColorScheme {
+    return new ColorScheme(0);
+  }
+
   function getForegroundColor() as Number {
     return _foregroundColor;
   }
@@ -177,6 +181,10 @@ class ColorScheme {
 
   function getLowPowerMode() as ColorScheme {
     return _lowPowerModeColorScheme;
+  }
+
+  function toNumber() as Number {
+    return _code as Number;
   }
   
   private function _makeLowPowerModeColorScheme() as ColorScheme {

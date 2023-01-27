@@ -34,12 +34,13 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   // properties:
   private const PROPERTY_DEFAULT_TOP_FIELD = FIELD_BATTERY;
   private const PROPERTY_DEFAULT_BOTTOM_FIELD = FIELD_DATE;
+  private const PROPERTY_DEFAULT_COLOR_SCHEME = ColorScheme.makeDefault();
   private const PROPERTY_DEFAULT_USE_LEADING_ZERO = false;
   private const PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON = false;
 
   private var _topField = PROPERTY_DEFAULT_TOP_FIELD;
   private var _bottomField = PROPERTY_DEFAULT_BOTTOM_FIELD;
-  private var _colorScheme = new ColorScheme(ColorScheme.DEFAULT);
+  private var _colorScheme = PROPERTY_DEFAULT_COLOR_SCHEME;
   private var _useLeadingZero = PROPERTY_DEFAULT_USE_LEADING_ZERO;
   private var _displayAlwaysOn = PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON;
 
@@ -61,8 +62,9 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   public function onSettingsChanged() as Void {
+    _debug("onSettingsChanged");
     _loadSettings();
-    requestUpdate();
+    WatchUi.requestUpdate();
   }
 
   function onLayout(dc as Dc) as Void {
@@ -140,18 +142,47 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
   }
 
   private function _loadSettings() as Void {
-    // load properties: 
-    _topField = Application.Properties.getValue("TopField") as Field;
-    _bottomField = Application.Properties.getValue("BottomField") as Field;
-    _colorScheme = new ColorScheme(Application.Properties.getValue("ColorScheme") as Number);
-    _useLeadingZero = Application.Properties.getValue("UseLeadingZero") as Boolean;
-    try{
-      _displayAlwaysOn = (Application.Properties.getValue("DisplayAlwaysOn") as Boolean) && !System.getDeviceSettings().requiresBurnInProtection;
-    } catch (e) {
-      _displayAlwaysOn = PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON;
-    }
-    
+    // load properties:
+    _topField = _getFieldPropValue("TopField", PROPERTY_DEFAULT_TOP_FIELD);
+    _bottomField = _getFieldPropValue("BottomField", PROPERTY_DEFAULT_BOTTOM_FIELD);
+    _colorScheme = _getColorSchemePropValue("ColorScheme", ColorScheme.makeDefault());
+    _useLeadingZero = _getBooleanPropValue("UseLeadingZero", PROPERTY_DEFAULT_USE_LEADING_ZERO);
+    _displayAlwaysOn = _getBooleanPropValue("DisplayAlwaysOn", PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON) && !System.getDeviceSettings().requiresBurnInProtection;
     _calculatePseudoProperties();
+  }
+
+  private function _getBooleanPropValue(key as String, defaultValue as Boolean) as Boolean {
+    try{
+      var value = Application.Properties.getValue(key);
+      if (value == null) {
+        return defaultValue;
+      } else {
+        return value as Boolean;
+      }
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  private function _getNumberPropValue(key as String, defaultValue as Number) as Number {
+    try{
+      var value = Application.Properties.getValue(key);
+      if (value == null) {
+        return defaultValue;
+      } else {
+        return value as Number;
+      }
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  private function _getColorSchemePropValue(key as String, defaultValue as ColorScheme) as ColorScheme {
+    return new ColorScheme(_getNumberPropValue(key, defaultValue.toNumber()));
+  }
+
+  private function _getFieldPropValue(key as String, defaultValue as Field) as Field {
+    return _getNumberPropValue(key, defaultValue) as Field;
   }
 
   private function _calculatePseudoProperties() as Void {
