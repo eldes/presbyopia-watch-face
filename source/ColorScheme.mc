@@ -3,7 +3,7 @@ import Toybox.Lang;
 class ColorScheme {
 
   enum Code {
-    // dark mode on black:
+    // dark mode 1 color on black:
     WHITE_ON_BLACK = 0xff0,
     YELLOW_ON_BLACK = 0xee0,
     CYAN_ON_BLACK = 0xdd0,
@@ -13,6 +13,7 @@ class ColorScheme {
     RED_ON_BLACK = 0x990,
     BLUE_ON_BLACK = 0x880,
 
+    // dark mode 2 colors on black
     YELLOW_AND_WHITE_ON_BLACK = 0xef0,
     CYAN_AND_WHITE_ON_BLACK = 0xdf0,
     GREEN_AND_WHITE_ON_BLACK = 0xcf0,
@@ -243,6 +244,13 @@ class ColorScheme {
       case RED_ON_BLACK:
       case BLUE_ON_BLACK:
       case WHITE_ON_BLACK:
+      case YELLOW_AND_WHITE_ON_BLACK:
+      case CYAN_AND_WHITE_ON_BLACK:
+      case GREEN_AND_WHITE_ON_BLACK:
+      case MAGENTA_AND_WHITE_ON_BLACK:
+      case ORANGE_AND_WHITE_ON_BLACK:
+      case RED_AND_WHITE_ON_BLACK:
+      case BLUE_AND_WHITE_ON_BLACK:
         return self;
 
       case WHITE_ON_RED:
