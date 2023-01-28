@@ -145,7 +145,7 @@ class PresbyopiaWatchFaceView extends WatchUi.WatchFace {
     // load properties:
     _topField = _getFieldPropValue("TopField", PROPERTY_DEFAULT_TOP_FIELD);
     _bottomField = _getFieldPropValue("BottomField", PROPERTY_DEFAULT_BOTTOM_FIELD);
-    _colorScheme = _getColorSchemePropValue("ColorScheme", ColorScheme.makeDefault());
+    _colorScheme = _getColorSchemePropValue("ColorScheme", PROPERTY_DEFAULT_COLOR_SCHEME);
     _useLeadingZero = _getBooleanPropValue("UseLeadingZero", PROPERTY_DEFAULT_USE_LEADING_ZERO);
     _displayAlwaysOn = _getBooleanPropValue("DisplayAlwaysOn", PROPERTY_DEFAULT_DISPLAY_ALWAYS_ON) && !System.getDeviceSettings().requiresBurnInProtection;
     _calculatePseudoProperties();
