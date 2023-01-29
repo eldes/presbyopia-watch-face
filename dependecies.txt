@@ -1,0 +1,52 @@
+Minimum: 3.1.0
+
+Application.AppBase:
+- 1.0.0 onStart()
+- 1.0.0 onStop()
+- 1.0.0 getInitialView()
+- 1.2.0 onSettingsChanged()
+
+Application:
+- 1.0.0 getApp()
+
+WatchUi:
+- 1.0.0 WatchUi.requestUpdate()
+- 1.0.0 WatchUi.loadResource()
+
+WatchUi.WatchFace:
+
+WatchUi.View:
+- 1.0.0 onLayout()
+- 1.0.0 onUpdate()
+
+WatchUi.WatchFace:
+- 1.0.0 onEnterSleep()
+- 1.0.0 onExitSleep()
+
+- 1.0.0 System.getClockTime()
+
+- 1.0.0 Time.Moment.value()
+
+- 1.0.0   Time.now()
+
+- 1.0.0 Gregorian.info()
+- 1.0.0 Time.FORMAT_SHORT
+
+- 1.0.0 System.getDeviceSettings()
+- 3.0.12 System.getDeviceSettings().requiresBurnInProtection
+- 3.1.0 System.getDeviceSettings().systemLanguage
+- 1.0.0 System.getSystemStats()
+
+- 1.0.0 Dc.setColor()
+- 1.0.0 Dc.clear()
+- 1.0.0 Dc.draw*()
+
+- 1.3.0 Math.round()
+- 1.0.0 Number.format()
+
+- 1.0.0 ActivityMonitor.getInfo().steps
+- 1.0.0 Activity.getActivityInfo().currentHeartRate
+- 1.2.2 ActivityMonitor.getHeartRateHistory()
+- 1.2.2 ActivityMonitor.getHeartRateHistory().next().heartRate
+- 2.4.0 Application.Properties.getValue()
+
