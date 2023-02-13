@@ -66,4 +66,8 @@
   <setting propertyKey="@Properties.UseLeadingZero" title="@Strings.UseLeadingZeroTitle">
     <settingConfig type="boolean" />
   </setting>
+
+  <setting propertyKey="@Properties.DisplayAlwaysOn" title="@Strings.DisplayAlwaysOnTitle">
+    <settingConfig type="boolean" readonly="true" />
+  </setting>
 </settings>
