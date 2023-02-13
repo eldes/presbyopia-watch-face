@@ -6,7 +6,7 @@
     <string id="BottomFieldTitle">Bottom field</string>
     <string id="ColorSchemeTitle">Color scheme</string>
     <string id="UseLeadingZeroTitle">Use leading zero</string>
-    <string id="DisplayAlwaysOnTitle">Keep the MIP display always on</string>
+    <string id="DisplayAlwaysOnTitle">Keep the display always on (just for MIP screens)</string>
 
     <!-- FIELDS -->
     <string id="FieldBattery">🔋 Battery</string>
